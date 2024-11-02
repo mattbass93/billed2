@@ -22,7 +22,7 @@ describe("Given I am connected as an employee", () => {
     });
   });
 
-  //POST
+
   describe("When I upload a file in the NewBill form", () => {
     test("Then it should reject invalid file types", () => {
       localStorage.setItem("user", JSON.stringify({ email: "test@employee.com" }));
@@ -114,8 +114,8 @@ describe("Given I am connected as an employee", () => {
   });
 });
 
-//ERROR 400, 500
-describe("When I submit the form and receive a 400 error from the API", () => {
+//ERROR 404, 500
+describe("When I submit the form and receive a 404 error from the API", () => {
   test("Then it should log an error message in the console", async () => {
     localStorage.setItem("user", JSON.stringify({ email: "test@employee.com" }));
 
@@ -125,7 +125,7 @@ describe("When I submit the form and receive a 400 error from the API", () => {
     const onNavigate = jest.fn();
     const store = {
       bills: jest.fn(() => ({
-        create: jest.fn(() => Promise.reject(new Error("Erreur 400")))
+        create: jest.fn(() => Promise.reject(new Error("Erreur 404")))
       }))
     };
 
@@ -153,7 +153,7 @@ describe("When I submit the form and receive a 400 error from the API", () => {
     fireEvent.submit(form);
 
     await waitFor(() => {
-      expect(console.error).toHaveBeenCalledWith(new Error("Erreur 400"));
+      expect(console.error).toHaveBeenCalledWith(new Error("Erreur 404"));
     });
   });
 });
